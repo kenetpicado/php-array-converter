@@ -1,7 +1,28 @@
-# Vue 3 + Vite
+# Apache Config Generator for Laravel
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+### Setup the project
 
-## Recommended IDE Setup
+- Clone the repository
+```shell
+git clone https://github.com/kenetpicado/php-array-converter.git
+```
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+- Install dependencies
+
+```shell
+npm install
+```
+
+- Run local server
+```
+npm run dev
+```
+
+- Build for production
+```
+npm run build
+```
+
+## Usage
+Paste your CSV data and the array will be automatically generated in real time.
+![Captura de pantalla de 2023-03-28 18-50-14](https://user-images.githubusercontent.com/83382624/228399432-7c68b5b7-69f7-4e35-8ea6-7f3c8e5fcab3.png)
