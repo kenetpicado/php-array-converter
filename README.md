@@ -2,6 +2,10 @@
 
 Este programa convierte datos en formato CSV a un arreglo PHP en formato de texto. Puedes utilizarlo para transformar datos de un archivo CSV y generar un arreglo PHP que puedas utilizar en tu código.
 
+Establece el delimitator, luego pega el texto CSV.
+
+-  [Demo](https://kenetpicado.github.io/php-array-converter/)
+
 ## 🚀 Instalación
 
 Sigue estos pasos para instalar y ejecutar el proyecto en tu máquina local:
