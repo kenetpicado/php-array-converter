@@ -1,49 +1,83 @@
+<template>
+    <div class="max-container w-full flex mt-8 md:mt-4">
+        <div class="w-full space-y-6 mx-8">
+            <h1 class="text-2xl text-center mt-4">
+                Convert Data from CSV to PHP array
+            </h1>
+            <section class="shadow dark:shadow-xl rounded-xl bg-white dark:bg-slate-800 p-3 md:p-6">
+
+                <div class="grid gap-6 mb-6 md:grid-cols-3">
+                    <InputForm v-model="delimiter" text="Delimiter" />
+                    <div>
+                        <label class="label-primary">Quotes (No working)</label>
+                        <select v-model="quotes" class="input-primary">
+                            <option value="simple">Simple</option>
+                            <option value="doble">Doble</option>
+                        </select>
+                    </div>
+                </div>
+
+                <TextAreaForm v-model="csvData" placeholder="Paste your CSV data" />
+
+            </section>
+
+            <section class="shadow dark:shadow-xl rounded-xl bg-white dark:bg-slate-800 p-3 md:p-6">
+                <div class="flex justify-end items-center">
+                    <button @click="copyToClipboard()">Copy</button>
+                </div>
+                <div id="resultArray">
+                    <pre>{{ phpArray }}</pre>
+                </div>
+            </section>
+        </div>
+    </div>
+</template>
+
 <script setup>
-import { ref, watch } from 'vue'
+import TextAreaForm from "./components/TextAreaForm.vue";
+import InputForm from "./components/InputForm.vue";
+import { ref, watch } from "vue";
 
-const csv = ref('')
-const phpArray = ref('')
+const csvData = ref("");
+const phpArray = ref("");
+const delimiter = ref(",");
+const quotes = ref("simple");
 
-watch(csv, (value) => {
-  const lines = value.split('\n')
-  const headers = lines[0].split(',')
-  const temp = ref('')
+watch(csvData, (value) => {
+    transformCsv(value);
+});
 
-  lines.slice(1).map(line => {
-    const values = line.split(',')
-    const oneRow = ref('[\n')
+function transformCsv(data) {
+    const updatedCsvData = data.replace(/"([^"]*)"/g, (match, capturedText) => {
+        return capturedText.replace(/\n/g, ' ');
+    });
 
-    headers.forEach((header, index) => {
-      oneRow.value += `    '${header ?? ''}' => '${values[index] ?? ''}',\n`
-    })
+    const lines = updatedCsvData.split("\n");
+    const headers = lines[0].split(delimiter.value).map(header => header.trim());
 
-    oneRow.value += '],\n'
-    temp.value += oneRow.value
-  })
+    const temporalResult = lines.slice(1).map((line) => {
+        const values = line.split(delimiter.value).map(header => header.trim());
 
-  phpArray.value = temp.value
-})
+        const rowValues = headers.map((header, index) => `    '${header}' => '${values[index] ?? ""}',`);
+
+        return `[\n${rowValues.join("\n")}\n],`;
+    }).join("\n");
+
+    phpArray.value = temporalResult;
+}
+
+function copyToClipboard() {
+    if (!phpArray.value) {
+        alert('No data to copy');
+        return;
+    }
+    const el = document.createElement('textarea');
+    el.value = phpArray.value;
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand('copy');
+    document.body.removeChild(el);
+    alert('Copied to clipboard');
+}
 
 </script>
-
-<template>
-  <div class="max-container w-full flex mt-8 md:mt-4">
-    <div class="w-full space-y-6 mx-8">
-      <h1 class="text-2xl text-center mt-4">Convert Data from CSV to PHP array</h1>
-      <section class="shadow dark:shadow-xl rounded-xl bg-white dark:bg-slate-800 p-3 md:p-6">
-          <div class="file border-4 border-dashed border-transparent w-full bg-slate-700 dark:bg-slate-700 rounded-xl md:rounded-br-none p-6">
-            <textarea class="text-sm w-full bg-slate-700 dark:bg-slate-700 text-white font-mono focus:outline-none"
-              rows="8" placeholder="Paste your CSV data" v-model="csv"
-              autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
-          </div>
-      </section>
-      <section class="shadow dark:shadow-xl rounded-xl bg-white dark:bg-slate-800 p-3 md:p-6">
-        <div class="file border-4 border-dashed border-transparent w-full bg-slate-700 dark:bg-slate-700 rounded-xl md:rounded-br-none p-6">
-            <textarea class="text-sm w-full bg-slate-700 dark:bg-slate-700 text-white font-mono focus:outline-none"
-              rows="20" placeholder="Result" v-model="phpArray"
-              autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></textarea>
-          </div>
-      </section>
-    </div>
-  </div>
-</template>

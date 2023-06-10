@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+    .input-primary {
+        @apply outline-none border-2 focus:border-gray-400 transform border-solid transition duration-300 bg-slate-100 text-gray-600 w-full py-2.5 px-3 rounded-lg text-xs my-1;
+      }
+
+    .label-primary {
+        @apply block mb-1 text-sm font-medium text-gray-900 dark:text-white;
+    }
+}
