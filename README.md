@@ -1,68 +1,68 @@
 # CSV to PHP Array Converter
 
-Este programa convierte datos en formato CSV a un arreglo PHP en formato de texto. Puedes utilizarlo para transformar datos de un archivo CSV y generar un arreglo PHP que puedas utilizar en tu código.
+This program converts CSV data into a PHP array in text format. You can use it to transform data from a CSV file and generate a PHP array that you can use in your code.
 
-Establece el delimitator, luego pega el texto CSV.
+Set the delimiter, then paste the CSV text.
 
 -  [Demo](https://kenetpicado.github.io/php-array-converter/)
 
-## 🚀 Instalación
+## 🚀 Installation
 
-Sigue estos pasos para instalar y ejecutar el proyecto en tu máquina local:
+Follow these steps to install and run the project on your local machine:
 
-1. Clona este repositorio:
+1. Clone this repository:
 ```bash
 git clone https://github.com/kenetpicado/php-array-converter.git
 ```
-2. Ve al directorio del proyecto
+2. Navigate to the project directory:
 ```bash
 cd php-array-converter
 ```
-3. Instala las dependencias:
+3. Install the dependencies:
 ```bash
 npm install
 ```
-## 📦 Uso
+## 📦 Usage
 
-- Inicia la aplicación en modo de desarrollo:
+- Start the application in development mode:
 ```bash
 npm run dev
 ```
-- Compila y minifica los archivos para producción:
+- Compile and minify the files for production:
 ```bash
 npm run build
 ```
 
-## 🛠️ Construido con
+## 🛠️ Built With
 
-- 💚 [Vue.js](https://vuejs.org/): Un framework de JavaScript para construir interfaces de usuario interactivas y reactivas.
-- 🎨 [Tailwind CSS](https://tailwindcss.com/): Un framework de CSS utilitario altamente personalizable para crear diseños rápidos y modernos.
-- ⚡️ [Vite](https://vitejs.dev/): Un bundler rápido y liviano para aplicaciones web modernas en JavaScript.
+- 💚 [Vue.js](https://vuejs.org/): A JavaScript framework for building interactive and reactive user interfaces.
+- 🎨 [Tailwind CSS](https://tailwindcss.com/): A highly customizable utility-first CSS framework for quickly building modern designs.
+- ⚡️ [Vite](https://vitejs.dev/): A fast and lightweight bundler for modern web applications in JavaScript.
 
-Estas tecnologías han sido fundamentales en el desarrollo de este proyecto y han proporcionado una base sólida para construir una aplicación web eficiente y con una excelente experiencia de usuario.
+These technologies have been instrumental in the development of this project and have provided a solid foundation for building an efficient web application with an excellent user experience.
 
-## 👥 Autores
+## 👥 Author
 - [Kenet Picado](https://github.com/kenetpicado)
 
 ## 🤝 Contribución
 
-¡Las contribuciones son bienvenidas! Para contribuir al proyecto, sigue estos pasos:
+Contributions are welcome! To contribute to the project, follow these steps:
 
-1. Haz un fork del repositorio.
-2. Crea una nueva rama:
+1. Fork the repository.
+2. Create a new branch:
 ```bash
-git checkout -b feature/nueva-funcionalidad
+git checkout -b feature/new-feature
 ```
-3. Realiza los cambios y haz commit:
+3. Make the changes and commit:
 ```bash
-git commit -am 'Agrega una nueva funcionalidad'
+git commit -am 'Add a new feature'
 ```
-4. Haz push a la rama:
+4. Push the branch:
 ```bash
-git push origin feature/nueva-funcionalidad
+git push origin feature/new-feature
 ```
-5. Envía un Pull Request.
+5. Submit a pull request.
 
 ## 📋 Licencia
 
-Este proyecto se encuentra bajo la [Licencia MIT](https://opensource.org/licenses/MIT).
+This project is licensed under the [MIT License.](https://opensource.org/licenses/MIT).
