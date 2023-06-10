@@ -6,7 +6,7 @@
             </h1>
             <section class="shadow dark:shadow-xl rounded-xl bg-white dark:bg-slate-800 p-3 md:p-6">
 
-                <div class="grid gap-6 mb-6 md:grid-cols-3">
+                <div class="grid gap-6 mb-6 md:grid-cols-6">
                     <InputForm v-model="delimiter" text="Delimiter" />
                     <div>
                         <label class="label-primary">Quotes (No working)</label>
