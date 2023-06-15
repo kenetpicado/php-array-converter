@@ -58,7 +58,7 @@ function transformCsv(data) {
     const temporalResult = lines.slice(1).map((line) => {
         const values = line.split(delimiter.value).map(header => header.trim());
 
-        const rowValues = headers.map((header, index) => `    '${header}' => '${values[index] ?? ""}',`);
+        const rowValues = headers.map((header, index) => `    "${header}" => "${values[index] ?? ""}",`);
 
         return `[\n${rowValues.join("\n")}\n],`;
     }).join("\n");
