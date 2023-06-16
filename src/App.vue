@@ -31,7 +31,7 @@
             <section class="shadow dark:shadow-xl rounded-xl bg-white dark:bg-slate-800 p-3 md:p-6 w-full">
                 <button @click="copyToClipboard()" class="mb-4">Copy</button>
                 <div id="resultArray">
-                    <pre class="ooverflow-x-auto max-w-full whitespace-pre-wrap">{{ phpArray }}</pre>
+                    <pre class="ooverflow-x-auto max-w-full whitespace-pre-wrap"><code>{{ phpArray }}</code></pre>
                 </div>
             </section>
         </div>
@@ -80,17 +80,7 @@ function transformCsv(data) {
 
         const rowValues = headers.map((header, index) => {
 
-            if (!values[index]) {
-
-                //On null case
-                if (onNull.value === "delete") {
-                    return null;
-                } else {
-                    return `    "${header}" => "",`;
-                }
-            }
-
-            else if (columnsToIgnore.value.includes(index)) {
+            if (columnsToIgnore.value.includes(index)) {
 
                 //On ignore case
                 if (onIgnore.value === "delete") {
@@ -100,7 +90,19 @@ function transformCsv(data) {
                 }
 
             } else {
-                return `    "${header}" => "${values[index] ?? ""}",`;
+
+                if (!values[index]) {
+
+                    //On null case
+                    if (onNull.value === "delete") {
+                        return null;
+                    } else {
+                        return `    "${header}" => "",`;
+                    }
+                } else {
+                    return `    "${header}" => "${values[index] ?? ""}",`;
+                }
+
             }
 
         }).filter(value => value !== null);
