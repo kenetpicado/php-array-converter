@@ -27,7 +27,12 @@
                 </div>
                 <TextAreaForm v-model="csvData" placeholder="Paste your CSV data" />
             </section>
-
+            <section class="shadow rounded-xl bg-white dark:bg-slate-800 p-3 md:p-6">
+                <h2 class="text-xl" role="button" @click="showHeaders = !showHeaders">Headers with Index</h2>
+                <div class="grid gap-6 mb-6 grid-cols-6 mt-6" v-if="showHeaders">
+                    <div v-for="header in headersWithIndex" :key="header">{{ header }}</div>
+                </div>
+            </section>
             <section class="shadow dark:shadow-xl rounded-xl bg-white dark:bg-slate-800 p-3 md:p-6 w-full">
                 <button @click="copyToClipboard()" class="mb-4">Copy</button>
                 <div id="resultArray">
@@ -49,6 +54,8 @@ const delimiter = ref("~");
 const onIgnore = ref("delete");
 const onNull = ref("keep");
 const ignore = ref("");
+const headersWithIndex = ref([]);
+const showHeaders = ref(false);
 
 watch(csvData, (value) => {
     transformCsv(value);
@@ -74,37 +81,30 @@ function transformCsv(data) {
     const lines = updatedCsvData.split("\n");
     const headers = lines[0].split(delimiter.value).map(header => header.trim().toLowerCase().replace(/ /g, "_"));
 
+    headersWithIndex.value = headers.map((header, index) => {
+        return index + ": " + header;
+    });
+
     const temporalResult = lines.slice(1).map((line, index) => {
 
         const values = line.split(delimiter.value).map(header => header.trim());
 
         const rowValues = headers.map((header, index) => {
-
             if (columnsToIgnore.value.includes(index)) {
-
-                //On ignore case
-                if (onIgnore.value === "delete") {
+                if (onIgnore.value === "delete")
                     return null;
-                } else {
+                else
                     return `    //"${header}" => "${values[index] ?? ""}",`;
-                }
-
-            } else {
-
-                if (!values[index]) {
-
-                    //On null case
-                    if (onNull.value === "delete") {
-                        return null;
-                    } else {
-                        return `    "${header}" => "",`;
-                    }
-                } else {
-                    return `    "${header}" => "${values[index] ?? ""}",`;
-                }
-
             }
 
+            if (!values[index]) {
+                if (onNull.value === "delete")
+                    return null;
+                else
+                    return `    "${header}" => "",`;
+            }
+
+            return `    "${header}" => "${values[index] ?? ""}",`;
         }).filter(value => value !== null);
 
         return `[\n${rowValues.join("\n")}\n],`;
