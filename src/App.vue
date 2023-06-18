@@ -35,8 +35,8 @@
             </section>
             <section class="shadow dark:shadow-xl rounded-xl bg-white dark:bg-slate-800 p-3 md:p-6 w-full">
                 <button @click="copyToClipboard()" class="mb-4">Copy</button>
-                <div id="resultArray">
-                    <pre class="ooverflow-x-auto max-w-full whitespace-pre-wrap"><code>{{ phpArray }}</code></pre>
+                <div id="resultArray" class="overflow-x-auto max-w-full ">
+                    <pre class="whitespace-pre-wrap"><code>{{ phpArray }}</code></pre>
                 </div>
             </section>
         </div>
