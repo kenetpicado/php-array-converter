@@ -5,9 +5,10 @@
                 Convert Data from CSV to PHP array
             </h1>
             <section class="shadow dark:shadow-xl rounded-xl bg-white dark:bg-slate-800 p-3 md:p-6">
-
                 <div class="grid gap-6 mb-6 md:grid-cols-6">
                     <InputForm v-model="delimiter" text="Delimiter" />
+                    <InputForm v-model="only" text="Only Column" />
+                    <InputForm v-model="ignore" text="Ignore Column" />
                     <div>
                         <label class="label-primary">On ignore</label>
                         <select v-model="onIgnore" class="input-primary">
@@ -15,8 +16,6 @@
                             <option value="delete">Delete</option>
                         </select>
                     </div>
-                    <InputForm v-model="ignore" text="Ignore Column" />
-
                     <div>
                         <label class="label-primary">On null</label>
                         <select v-model="onNull" class="input-primary">
@@ -54,6 +53,7 @@ const delimiter = ref("~");
 const onIgnore = ref("delete");
 const onNull = ref("keep");
 const ignore = ref("");
+const only = ref("");
 const headersWithIndex = ref([]);
 const showHeaders = ref(false);
 
@@ -62,16 +62,24 @@ watch(csvData, (value) => {
 });
 
 const columnsToIgnore = computed(() => {
-    if (!ignore.value) {
+    return getCleanNumbers(ignore.value);
+});
+
+const onlyColumns = computed(() => {
+    return getCleanNumbers(only.value);
+});
+
+function getCleanNumbers(array) {
+    if (!array) {
         return [];
     }
 
-    return ignore.value.split(",")
+    return array.split(",")
         .filter((value, index, self) => self.indexOf(value) === index)
         .filter((value) => value !== "")
         .filter((column) => !isNaN(column))
         .map((column) => Number(column.trim()))
-});
+}
 
 function transformCsv(data) {
     const updatedCsvData = data.replace(/"([^"]*)"/g, (match, capturedText) => {
@@ -90,6 +98,10 @@ function transformCsv(data) {
         const values = line.split(delimiter.value).map(header => header.trim());
 
         const rowValues = headers.map((header, index) => {
+            if (onlyColumns.value.length > 0 && !onlyColumns.value.includes(index)) {
+                return null;
+            }
+
             if (columnsToIgnore.value.includes(index)) {
                 if (onIgnore.value === "delete")
                     return null;
@@ -127,7 +139,7 @@ function copyToClipboard() {
     alert('Copied to clipboard');
 }
 
-watch(() => [delimiter.value, onIgnore.value, onNull.value, ignore.value], () => {
+watch(() => [delimiter.value, onIgnore.value, onNull.value, ignore.value, only.value], () => {
     transformCsv(csvData.value);
 });
 
